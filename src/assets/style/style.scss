@@ -3,39 +3,48 @@
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 img {
   width: 100%;
 }
+
 a {
   text-decoration: none;
-}
-
-.flex {
-  display: flex;
-}
-.flex-column {
-  flex-direction: column;
-}
-.align-center {
-  align-items: center;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-space-around {
-  justify-content: space-around;
-}
-.justify-space-between {
-  justify-content: space-between;
-}
-.justify-space-evenly {
-  justify-content: space-evenly;
 }
 
 // Utility classes
 
 .container {
   padding: 1rem 6rem 1rem 4.75rem;
+  background-color: black;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-space-around {
+  justify-content: space-around;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.justify-space-evenly {
+  justify-content: space-evenly;
 }
 
 // Home page top section styles
@@ -52,6 +61,7 @@ a {
   background-position-x: 90%;
   transition: 200ms ease;
 }
+
 .bg-container-home {
   position: absolute;
   top: 0;
@@ -69,24 +79,30 @@ a {
   min-width: 100%;
   background-size: cover;
   background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%);
+
   .topbar {
     .search {
       margin-left: auto;
     }
+
     .img-container {
       width: 3rem;
       cursor: pointer;
       @extend .flex, .align-center, .justify-center;
-      > img {
+
+      >img {
         max-width: 2rem;
       }
+
       background-color: rgba(255, 255, 255, 0.5);
       border-radius: 50%;
       height: 3rem;
     }
+
     .search {
       gap: 1rem;
     }
+
     h4 {
       font-size: 35px;
       color: #fff;
@@ -99,9 +115,11 @@ a {
       font-size: 20px;
       margin: 0 2.75rem;
       position: relative;
+
       &:hover::before {
         content: "";
       }
+
       &::before {
         position: absolute;
         left: -0.5rem;
@@ -123,23 +141,244 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
+
     h2 {
-        color: #fff;
-        font-size: 3.75rem;
+      color: #fff;
+      font-size: 3.75rem;
     }
+
     .flex {
-        color: #fff;
-        .down-arrow {
-            border: 1px solid #fff;
-            border-radius: 58vw;
-            padding: 1rem 0.5rem 0.35rem 0.5rem;
-            font-size: 42px;
-            margin-right: 0.5rem;
-        }
-        p {
-            padding-top: 10px;
-            font-size: 15px;
-        }
+      color: #fff;
+
+      .down-arrow {
+        border: 1px solid #fff;
+        border-radius: 58vw;
+        padding: 1rem 0.5rem 0.35rem 0.5rem;
+        font-size: 42px;
+        margin-right: 0.5rem;
+      }
+
+      p {
+        padding-top: 10px;
+        font-size: 15px;
+      }
     }
   }
+}
+
+// section subscription
+.section {
+  min-height: 100vh;
+  padding: 10em 5em;
+}
+
+.subscription {
+  background-color: black;
+
+  h4 {
+    text-align: center;
+    color: #fff;
+  }
+
+  h2 {
+    @extend h4;
+    font-size: 300%;
+  }
+
+  p {
+    @extend h4;
+  }
+
+  .price {
+    display: flex;
+    place-content: center;
+    gap: 5rem;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+
+    .detail {
+      width: 16rem;
+      height: 16rem;
+      background-color: #2e2c2c;
+      border-radius: 50%;
+      text-align: center;
+      filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
+      padding: 2rem;
+
+      .price-detail {
+        padding-top: 1.5rem;
+        font-size: 700%;
+        font-weight: bold;
+        color: #fff;
+
+        span {
+          vertical-align: super;
+          font-size: 50%;
+        }
+      }
+
+      .description {
+        font-weight: bold;
+        color: #fff;
+      }
+    }
+
+  }
+
+  .learn-more {
+    margin-bottom: 6rem;
+
+    a {
+      color: #fff;
+      text-align: center;
+
+      &:hover {
+        color: hsl(185deg 58% 70%);
+      }
+    }
+  }
+
+  .tiers {
+    display: flex;
+    place-content: center;
+    gap: 5rem;
+    margin-top: 3rem;
+
+    .tier {
+      width: 25rem;
+      height: 18rem;
+      background-color: #2e2c2c;
+      filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
+      padding: 0 2rem;
+      text-align: center;
+      justify-content: center;
+      gap: 4rem;
+
+      .head {
+        padding-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        font-size: 225%;
+        color: #fff;
+        border-bottom: 1px solid #fff;
+        text-transform: uppercase;
+      }
+
+      .tier-note {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+
+// FAQ section
+.FAQ {
+  background-image: url(../img/faq_bg.jpg);
+
+  h2 {
+    font-size: 300%;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .FAQ-area {
+    .FAQ-data {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem 4rem;
+      margin-top: 2rem;
+      color: #fff;
+      border-left: 0.5rem solid #fff;
+      font-size: 1.5rem;
+      background: #2e2c2c;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: hsl(255 10% 15% / 1);
+      }
+    }
+
+    .FAQ-content {
+      margin: 0em 4em 0em 0.6em;
+      padding-left: 6rem;
+      background-color: #000;
+      border-radius: 0 0 8px 8px;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+
+      p {
+        color: #fff;
+      }
+
+      ul {
+        margin-top: 1rem;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// First person
+.section {
+  padding: 160px 80px;
+}
+
+.person {
+  background-image: url(../img/brand_bg.jpg);
+
+  .first-part {
+    color: #fff;
+    position: relative;
+
+    .info {
+      position: absolute;
+      width: 40%;
+      color: #fff;
+      top: 20rem;
+
+      ul {
+        list-style-type: none;
+        font-weight: bold;
+        margin-top: 2rem;
+        position: relative;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-top: 1rem;
+        margin-left: 5rem;
+        position: relative;
+      }
+
+      li::before {
+        content: url(../img/check-circle.svg);
+        filter: invert(97%) sepia(6%) saturate(4405%) hue-rotate(156deg) brightness(89%) contrast(97%);
+        position: absolute;
+        left: -2.5rem;
+      }
+    }
+
+    .pic{
+      position: absolute;
+      float: right;
+      right: 4rem;
+      top: 3rem;
+      img {
+        width: 70%;
+        transform: translate3d(77.7735px, 0px, 0px);
+      }
+    }
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
 }
