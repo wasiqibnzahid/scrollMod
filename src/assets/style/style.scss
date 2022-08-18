@@ -81,19 +81,17 @@ a {
 
   .topbar {
     white-space: nowrap;
+
     nav {
       margin-left: auto;
       margin-right: 3rem;
     }
-    .search {
-    }
-
     .img-container {
       width: 3rem;
       cursor: pointer;
       @extend .flex, .align-center, .justify-center;
 
-      > img {
+      >img {
         max-width: 2rem;
       }
 
@@ -323,37 +321,40 @@ a {
 }
 
 // First person
-.firstPerson {
-  display: block;
-}
-.secondPerson,
-.thirdPerson {
-  display: none;
-}
-.firstPerson, .secondPerson, .thirdPerson {
-  h2,h3, h5, li {
-    opacity: 0;
-  }
-  h2 {
-    transform: translateX(20%);
-    
-  }
-  h3 {
-    transform: translateX(20%);
-  }
-  h5 {
-    transform: translateX(30%);
-  }
-  li {
-    transform: translateX(30%);
-  }
-}
+// .firstPerson {
+  // display: block;
+// }
+
+// .secondPerson,
+// .thirdPerson {
+//   display: none;
+// }
+// .firstPerson, .secondPerson, .thirdPerson {
+//   h2,h3, h5, li {
+//     opacity: 0;
+//   }
+//   h2 {
+//     transform: translateX(20%);
+
+//   }
+//   h3 {
+//     transform: translateX(20%);
+//   }
+//   h5 {
+//     transform: translateX(30%);
+//   }
+//   li {
+//     transform: translateX(30%);
+//   }
+// }
 .section {
   padding: 160px 80px;
 }
+
 .person-container {
   min-height: 300vh;
 }
+
 .person {
   * {
     transition: 1000ms;
@@ -362,6 +363,7 @@ a {
   overflow: hidden;
   position: sticky;
   top: 0;
+
   .bg-img {
     position: absolute;
     height: 100%;
@@ -374,6 +376,7 @@ a {
   }
 
   background-repeat: no-repeat;
+
   .first-part {
     color: #fff;
     position: relative;
@@ -384,7 +387,14 @@ a {
       width: 50%;
       display: flex;
       flex-direction: column;
+
+      .title {
+        margin-top: 10rem;
+      }
+
       &.right {
+        margin-top: 10rem;
+
         h2,
         h3 {
           text-align: right;
@@ -394,7 +404,6 @@ a {
 
     .info {
       margin-top: auto;
-      margin-bottom: 15%;
       // position: absolute;
       // width: 40%;
       // color: #fff;
@@ -417,8 +426,7 @@ a {
 
       li::before {
         content: url(../img/check-circle.svg);
-        filter: invert(97%) sepia(6%) saturate(4405%) hue-rotate(156deg)
-          brightness(89%) contrast(97%);
+        filter: invert(97%) sepia(6%) saturate(4405%) hue-rotate(156deg) brightness(89%) contrast(97%);
         position: absolute;
         left: -2.5rem;
       }
@@ -444,5 +452,48 @@ a {
   h3 {
     font-size: 2rem;
     margin-bottom: 4rem;
+  }
+}
+
+// application
+.application {
+  background-image: url(../img/footer-bg.png);
+  h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 300%;
+  }
+
+  .Registration {
+    margin: 8rem auto;
+    padding: 2.5rem;
+    width: 70%;
+    color: #fff;
+
+    .form {
+
+      input {
+        padding: 10px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        font-size: 1rem;
+        background-color: #2e2c2c;
+        border: 1px solid black;
+      }
+
+      .button {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      button {
+        background-color: hsl(185deg 58% 70%);
+        border: #fff;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+
+      }
+    }
   }
 }
