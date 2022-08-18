@@ -3,9 +3,9 @@
     <div class="bg-img"></div>
     <div class="first-part">
       <div class="pics column">
-        <!-- <img src="../../assets/img/brand_pic1.png" alt="" /> -->
+        <img src="../../assets/img/brand_pic1.png" alt="" />
       </div>
-      <div class="column right">
+      <div class="column right ">
         <h2 class="title">Join the B(r)and!</h2>
         <h3 class="subtitle">Partner With Auto-Tune</h3>
 
@@ -34,4 +34,5 @@
 export default {};
 </script>
 
-<style></style>
+<style>
+</style>

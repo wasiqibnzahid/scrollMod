@@ -36,9 +36,9 @@ import SubscriptionsSection from "../components/home/SubscriptionsSection.vue";
 import AffiliateSection from "../components/home/AffiliateSection.vue";
 import FAQSection from "../components/home/FAQSection.vue";
 export default {
-  mounted() {
-    window.addEventListener("scroll", this.scrollFunction);
-  },
+  // mounted() {
+  //   window.addEventListener("scroll", this.scrollFunction);
+  // },
   components: {
     TopBar,
     firstPerson,
@@ -87,13 +87,13 @@ export default {
                if(translate < 72) {
                 x.style.transform = `translateY(${translate + 4}rem)`
 
-               }
-            }
-          });
-        }
-        // console.log(window.scrollY, 1120, 1320)
-      }
-    },
+    //            }
+    //         }
+    //       });
+    //     }
+    //     // console.log(window.scrollY, 1120, 1320)
+    //   }
+    // },
   },
 };
 </script>
