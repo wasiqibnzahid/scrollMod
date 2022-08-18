@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="section subscription">
+  <div class="container subscription">
+    <div class="section">
       <h4>HOW AFFILIATES GET PAID</h4>
       <h2>Auto-Tune Unlimited Subscriptions</h2>
       <p>Affiliates are paid flat rates for initial Auto-Tune Unlimited subscription sales when purchased via affiliate
