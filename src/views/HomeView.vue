@@ -65,16 +65,17 @@ export default {
           this.lastPosition = window.scrollY;
           innerInfo.forEach((x) => {
             if (x.style.opacity != "" && parseInt(x.style.opacity) < 1) {
-              var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, "").replace("%)", ""))
+              var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, ""))
+              console.log(translate)
               x.style.opacity = `${parseFloat(x.style.opacity) + 0.1}`;
               if(translate > 0) {
-                x.style.transform = `translateX(${translate - 4}%)`
+                x.style.transform = `translateY(${translate - 4}rem)`
                 console.log(x.style.transform)
               }
               
             } else if (x.style.opacity == "") {
               x.style.opacity = "0";
-              x.style.transform = "translateX(20%)";
+              x.style.transform = "translateY(72rem)";
             }
           });
         } else if (this.lastPosition - 15 >= window.scrollY) {
@@ -82,9 +83,9 @@ export default {
           innerInfo.forEach((x) => {
             if (x.style.opacity != "" && parseFloat(x.style.opacity) > 0) {
               x.style.opacity = `${parseFloat(x.style.opacity) - 0.1}`;
-               var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, "").replace("%)", ""))
-               if(translate < 20) {
-                x.style.transform = `translateX(${translate + 4}%)`
+               var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, ""))
+               if(translate < 72) {
+                x.style.transform = `translateY(${translate + 4}rem)`
 
                }
             }

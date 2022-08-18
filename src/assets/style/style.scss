@@ -330,22 +330,26 @@ a {
 .thirdPerson {
   display: none;
 }
-.firstPerson, .secondPerson, .thirdPerson {
-  h2,h3, h5, li {
+.firstPerson,
+.secondPerson,
+.thirdPerson {
+  h2,
+  h3,
+  h5,
+  li {
     opacity: 0;
   }
   h2 {
-    transform: translateX(20%);
-    
+    transform: translateY(72%);
   }
   h3 {
-    transform: translateX(20%);
+    transform: translateY(72%);
   }
   h5 {
-    transform: translateX(30%);
+    transform: translateY(80%);
   }
   li {
-    transform: translateX(30%);
+    transform: translateY(80%);
   }
 }
 .section {
@@ -356,7 +360,7 @@ a {
 }
 .person {
   * {
-    transition: 1000ms;
+    transition: 3000ms;
   }
 
   overflow: hidden;
