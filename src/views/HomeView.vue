@@ -1,23 +1,10 @@
 <template>
   <div>
-    <!-- <div
-      style="
-        position: fixed;
-        width: 200px;
-        height: 200px;
-        background: red;
-        top: 50%;
-        left: 50%;
-        z-index: 20;
-      "
-    >
-      {{ shownItem }}
-    </div> -->
     <div class="home-container">
-      <div class="user-img-container"></div>
+      <div class="user-img-container" ref="topContainer"></div>
       <div class="bg-container-home"></div>
+      <TopBar :addClass="topClass" />
       <div class="home-content-box flex flex-column">
-        <TopBar />
         <div class="home-content container">
           <h2>Why partner with Auto-Tune?</h2>
           <div class="flex align-center">
@@ -27,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div ref="person-container" class="person-container">
+    <div ref="personContainer" class="person-container">
       <firstPerson class="firstPerson" ref="personOne" />
       <secondPerson class="secondPerson" ref="personTwo" />
       <thirdPerson class="thirdPerson" ref="personThree" />
@@ -51,29 +38,46 @@ import FAQSection from "../components/home/FAQSection.vue";
 
 export default {
   mounted() {
-    const observer = new IntersectionObserver(
+    // Scroll to Top
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 250);
+
+    // Observer for person section
+    const observerPerson = new IntersectionObserver(
       (change) => {
-        if (change[0].intersectionRatio >= 0.6) {
+        if (change[0].intersectionRatio) {
           if (this.firstItemTop == 0) {
             this.itemTop = change[0].rootBounds.height;
             this.firstItemTop = change[0].rootBounds.height;
           }
-
-          window.addEventListener("scroll", () => {
-            this.scrollFunctionFinal();
-          });
+          if (change[0].isIntersecting) {
+            console.log("added");
+            window.addEventListener("scroll", this.scrollFunctionFinal);
+          } else {
+            console.log("removed");
+            window.removeEventListener("scroll", this.scrollFunctionFinal);
+          }
         }
       },
       {
-        threshold: 0.7,
+        threshold: 0.02,
       }
     );
-    observer.observe(this.firstPerson);
+    observerPerson.observe(this.$refs.personContainer);
+
+    // Observer for top section
+    const observerTop = new IntersectionObserver((change) => {
+      if (change[0].isIntersecting) {
+        window.addEventListener("scroll", this.topScrollFunction);
+      } else {
+        window.removeEventListener("scroll", this.topScrollFunction);
+      }
+    });
+    observerTop.observe(this.$refs.topContainer);
   },
   unmounted() {
-    window.removeEventListener("scroll", () => {
-      this.scrollFunctionFinal();
-    });
+    window.removeEventListener("scroll", this.scrollFunctionFinal);
   },
   components: {
     TopBar,
@@ -95,44 +99,98 @@ export default {
       scrollDirection: "",
       firstItemTop: 0,
       runningScroll: false,
+      scrollArray: [],
+      lastCallPosition: 0,
+      topClass: false,
     };
   },
   methods: {
-    scrollFunctionFinal() {
-      var scroll = window.scrollY;
-      setTimeout(() => {
-        if (this.shownItem == 1) {
-          this.$refs.personOne.$el.style.display = "block";
-          this.$refs.personTwo.$el.style.display = "none";
-          this.$refs.personThree.$el.style.display = "none";
-        } else if (this.shownItem == 2) {
-          this.$refs.personOne.$el.style.display = "none";
-          this.$refs.personTwo.$el.style.display = "block";
-          this.$refs.personThree.$el.style.display = "none";
-        } else if (this.shownItem == 3) {
-          this.$refs.personOne.$el.style.display = "none";
-          this.$refs.personTwo.$el.style.display = "none";
-          this.$refs.personThree.$el.style.display = "block";
-        }
-      }, 1000);
-      if (this.runningScroll == true) {
-        return;
+    topScrollFunction() {
+      if (window.scrollY >= 30) {
+        this.topClass = true;
+      } else {
+        this.topClass = false;
       }
-      this.runningScroll = true;
-      if (scroll > this.firstItemTop) {
+      const scroll = window.scrollY;
+      if (this.topContainer.style.backgroundPositionX == "") {
+        this.topContainer.style.backgroundPositionX = "90%, 0%";
+      }
+      const position = this.topContainer.style.backgroundPositionX
+        .replaceAll("%", "")
+        .split(",");
+      if (scroll < 50) {
+        this.lastPosition = 0;
+        this.topContainer.style.backgroundPositionX = "90%, 0%";
+      } else if (scroll > this.lastPosition + 5) {
         this.lastPosition = scroll;
-        if (scroll < this.firstItemTop + 4500) {
+        this.topContainer.style.backgroundPositionX = `${
+          parseInt(position[0]) + 4
+        }%, ${parseInt(position[1]) - 4}%`;
+      }
+      if (
+        scroll < this.lastPosition - 55 &&
+        90 % parseInt(position[0]) > 90 &&
+        parseInt(position[1]) < 0
+      ) {
+        this.lastPosition = scroll;
+        this.topContainer.style.backgroundPositionX = `${
+          parseInt(position[0]) - 4
+        }%, ${parseInt(position[1]) + 4}%`;
+      }
+    },
+
+    scrollFunctionFinal() {
+      const scroll = window.scrollY;
+      if (scroll > this.firstItemTop && scroll < this.firstItemTop + 11100) {
+        const myArray = [
+          this.$refs.personOne.$el,
+          this.$refs.personTwo.$el,
+          this.$refs.personThree.$el,
+        ];
+        // setTimeout(() => {
+        myArray.forEach((x) => {
+          if (x == myArray[this.shownItem - 1]) {
+            x.style.opacity = "1";
+            x.style.position = "sticky";
+            x.style.zIndex = "";
+          } else {
+            x.style.opacity = "0";
+            x.style.position = "absolute";
+            x.style.zIndex = "";
+          }
+        });
+        // }, 1000);
+        myArray.forEach((x) => {
+          if (x.querySelector(".bg-img").style.top == "") {
+            x.querySelector(".bg-img").style.top = "8rem";
+          }
+          var bgContainerTop = parseFloat(
+            x.querySelector(".bg-img").style.top.replace("rem", "")
+          );
+          if (this.lastPosition + 300 < scroll && bgContainerTop > -8) {
+            if (x == myArray[2]) {
+              this.lastPosition = scroll;
+            }
+            x.querySelector(".bg-img").style.top = `${bgContainerTop - 0.5}rem`;
+          } else if (this.lastPosition - 300 > scroll && bgContainerTop < 8) {
+            if (x == myArray[2]) {
+              this.lastPosition = scroll;
+            }
+            x.querySelector(".bg-img").style.top = `${bgContainerTop + 0.5}rem`;
+          }
+        });
+        if (scroll < this.firstItemTop + 3700) {
           this.shownItem = 1;
           this.itemTop = this.firstItemTop;
         } else if (
-          scroll > this.firstItemTop + 4500 &&
-          scroll < this.firstItemTop + 4500 + 4500
+          scroll > this.firstItemTop + 3700 &&
+          scroll < this.firstItemTop + 3700 + 3700
         ) {
           this.shownItem = 2;
-          this.itemTop = this.firstItemTop + 4500;
-        } else if (scroll > this.firstItemTop + 4500 + 4500) {
+          this.itemTop = this.firstItemTop + 3700;
+        } else if (scroll > this.firstItemTop + 3700 + 3700) {
           this.shownItem = 3;
-          this.itemTop = this.firstItemTop + 4500 + 4500;
+          this.itemTop = this.firstItemTop + 3700 + 3700;
         }
         if (scroll > this.itemTop && scroll < this.itemTop + 250) {
           this.firstHeadings.forEach((x) => {
@@ -147,33 +205,26 @@ export default {
           }
           this.miniHeading.style.opacity = "0";
           this.miniHeading.style.transform = "translateY(5rem)";
-        } else if (scroll > this.itemTop + 50 && scroll < this.itemTop + 1000) {
+        } else if (
+          scroll >= this.itemTop + 250 &&
+          scroll < this.itemTop + 350
+        ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.2";
             x.style.transform = "translateY(12rem)";
-            x.style.transition = "500ms";
           });
-          this.miniHeading.style.transition = "500ms";
-          this.img.style.transition = "500ms";
-          this.list.forEach((x) => {
-            x.style.transition = "500ms";
-          });
+
           this.img.style.opacity = "0";
           if (this.shownItem != 2) {
             this.img.style.transform = "translateX(-12rem)";
           } else {
             this.img.style.transform = "translateX(12rem)";
           }
-        } else if (
-          scroll > this.itemTop + 1000 &&
-          scroll < this.itemTop + 1100
-        ) {
+        } else if (scroll > this.itemTop + 350 && scroll < this.itemTop + 500) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.4";
             x.style.transform = "translaetY(3rem)";
-            x.style.transition = "";
           });
-          this.miniHeading.style.transition = "";
           this.miniHeading.style.opacity = "0";
           this.miniHeading.style.transform = "translateY(5rem)";
           if (this.shownItem != 2) {
@@ -181,15 +232,9 @@ export default {
           } else {
             this.img.style.transform = "translateX(12rem)";
           }
-          this.img.style.transition = "";
-          this.list.forEach((x) => {
-            x.style.transition = "";
-          });
+
           this.img.style.opacity = "0";
-        } else if (
-          scroll > this.itemTop + 1000 &&
-          scroll < this.itemTop + 1200
-        ) {
+        } else if (scroll > this.itemTop + 500 && scroll < this.itemTop + 650) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.6";
             x.style.transform = "translateY(3rem)";
@@ -202,10 +247,7 @@ export default {
           this.img.style.opacity = "0.5";
           this.miniHeading.style.opacity = "0";
           this.miniHeading.style.transform = "translateY(5rem)";
-        } else if (
-          scroll > this.itemTop + 1200 &&
-          scroll < this.itemTop + 1300
-        ) {
+        } else if (scroll > this.itemTop + 650 && scroll < this.itemTop + 800) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.8";
             x.style.transform = "translateY(1rem)";
@@ -218,10 +260,7 @@ export default {
           }
           this.miniHeading.style.opacity = "0.4";
           this.miniHeading.style.transform = "translateY(3rem)";
-        } else if (
-          scroll > this.itemTop + 1300 &&
-          scroll < this.itemTop + 1400
-        ) {
+        } else if (scroll > this.itemTop + 800 && scroll < this.itemTop + 950) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
             x.style.transform = "translateY(0rem)";
@@ -233,8 +272,8 @@ export default {
           this.list[0].style.opacity = "0";
           this.list[0].style.transform = "translate(4rem, 2rem)";
         } else if (
-          scroll > this.itemTop + 1400 &&
-          scroll < this.itemTop + 1500
+          scroll > this.itemTop + 950 &&
+          scroll < this.itemTop + 1100
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -249,8 +288,8 @@ export default {
           this.img.style.opacity = "0.95";
           this.img.style.transform = "translateX(0em)";
         } else if (
-          scroll > this.itemTop + 1500 &&
-          scroll < this.itemTop + 1600
+          scroll > this.itemTop + 1100 &&
+          scroll < this.itemTop + 1250
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -269,8 +308,8 @@ export default {
           this.img.style.opacity = "0.95";
           this.img.style.transform = "translateX(0em)";
         } else if (
-          scroll > this.itemTop + 1700 &&
-          scroll < this.itemTop + 1800
+          scroll > this.itemTop + 1250 &&
+          scroll < this.itemTop + 1400
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -289,8 +328,8 @@ export default {
             this.list[2].style.transform = "translate(2rem, 1rem)";
           }
         } else if (
-          scroll > this.itemTop + 1800 &&
-          scroll < this.itemTop + 1950
+          scroll > this.itemTop + 1400 &&
+          scroll < this.itemTop + 1550
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -310,8 +349,8 @@ export default {
           this.img.style.opacity = "0.95";
           this.img.style.transform = "translateX(0em)";
         } else if (
-          scroll > this.itemTop + 1950 &&
-          scroll < this.itemTop + 2800
+          scroll > this.itemTop + 1550 &&
+          scroll < this.itemTop + 2150
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -328,8 +367,8 @@ export default {
           this.img.style.opacity = "0.95";
           this.img.style.transform = "translateX(0em)";
         } else if (
-          scroll > this.itemTop + 2800 &&
-          scroll < this.itemTop + 2900
+          scroll > this.itemTop + 2150 &&
+          scroll < this.itemTop + 2300
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -347,8 +386,8 @@ export default {
             this.img.style.transform = "translateX(4rem)";
           }
         } else if (
-          scroll > this.itemTop + 2900 &&
-          scroll < this.itemTop + 3000
+          scroll > this.itemTop + 2300 &&
+          scroll < this.itemTop + 2450
         ) {
           this.miniHeading.style.opacity = "0.5";
           this.list.forEach((x) => {
@@ -361,16 +400,16 @@ export default {
             this.img.style.transform = "translateX(6rem)";
           }
         } else if (
-          scroll > this.itemTop + 3000 &&
-          scroll < this.itemTop + 3100
+          scroll > this.itemTop + 2450 &&
+          scroll < this.itemTop + 2600
         ) {
           this.list.forEach((x) => {
             x.style.opacity = "0";
           });
           this.miniHeading.style.opacity = "0";
         } else if (
-          scroll > this.itemTop + 3100 &&
-          scroll < this.itemTop + 3200
+          scroll > this.itemTop + 2600 &&
+          scroll < this.itemTop + 2850
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "1";
@@ -385,8 +424,8 @@ export default {
             this.img.style.transform = "translateX(12rem)";
           }
         } else if (
-          scroll > this.itemTop + 3200 &&
-          scroll < this.itemTop + 3300
+          scroll > this.itemTop + 2850 &&
+          scroll < this.itemTop + 3000
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.7";
@@ -395,41 +434,30 @@ export default {
           this.miniHeading.style.opacity = "0";
           this.miniHeading.style.transform = "translateY(0rem)";
         } else if (
-          scroll > this.itemTop + 3300 &&
-          scroll < this.itemTop + 3400
+          scroll > this.itemTop + 3000 &&
+          scroll < this.itemTop + 3150
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0.4";
             x.style.transform = "translateY(-3.5rem)";
-            x.style.transition = "";
           });
           this.miniHeading.style.opacity = "0";
-          this.miniHeading.style.transition = "";
           this.miniHeading.style.transform = "translateY(0rem)";
-          this.img.style.transition = "";
-          this.list.forEach((x) => {
-            x.style.transition = "";
-          });
         } else if (
-          scroll > this.itemTop + 3400 &&
+          scroll > this.itemTop + 3150 &&
           scroll < this.itemTop + 4500
         ) {
           this.firstHeadings.forEach((x) => {
             x.style.opacity = "0";
             x.style.transform = "translateY(-5rem)";
-            x.style.transition = "500ms";
           });
           this.list.forEach((x) => {
             x.style.opacity = "0";
-            x.style.transition = "500ms";
           });
-          this.img.style.transition = "500ms";
-          this.miniHeading.style.transition = "500ms";
           this.miniHeading.style.opacity = "0";
           this.miniHeading.style.transform = "translateY(0rem)";
         }
       }
-      this.runningScroll = false;
     },
   },
 
@@ -464,6 +492,9 @@ export default {
     },
     miniHeading() {
       return this.firstPerson.querySelector("h5");
+    },
+    topContainer() {
+      return this.$refs.topContainer;
     },
     list() {
       return this.firstPerson.querySelectorAll("li");

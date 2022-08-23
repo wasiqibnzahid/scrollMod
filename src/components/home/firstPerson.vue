@@ -1,6 +1,6 @@
 <template>
   <div class="section person">
-    <div class="bg-img" style="top: 10rem"></div>
+    <div class="bg-img"></div>
     <div class="first-part">
       <div class="pics column">
         <img src="../../assets/img/brand_pic1.png" alt="" />

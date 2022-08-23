@@ -8,6 +8,15 @@ img {
   width: 100%;
 }
 
+button {
+  outline: none;
+  border: none;
+  &:hover,
+  &:active {
+    outline: none;
+    border: none;
+  }
+}
 a {
   text-decoration: none;
 }
@@ -50,7 +59,7 @@ html {
 
 // Home page top section styles
 .user-img-container {
-  background-image: url(../img/income_pic2.png);
+  background-image: url(../img/header-img.png), url(../img/homeMic.png);
   z-index: -1;
   background-repeat: no-repeat;
   background-size: auto 100%;
@@ -59,8 +68,8 @@ html {
   top: 0;
   right: 0;
   bottom: 0;
-  background-position-x: 90%;
-  transition: 200ms ease;
+  background-position-x: 90%, 0;
+  transition: 2000ms ease;
 }
 
 .bg-container-home {
@@ -69,6 +78,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
+  background-size: cover;
   background-color: black;
   background-image: url(../img/hero_bkg.jpg);
   z-index: -2;
@@ -82,24 +92,61 @@ html {
   background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%);
 
   .topbar {
+    padding-right: 7rem;
     white-space: nowrap;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 40px;
+    transition: 500ms;
+    background: transparent;
+    &.scrolled {
+      background-color: rgba(0, 0, 0, 0.7) !important;
+      backdrop-filter: blur(10px);
+    }
+    .button-container {
+      position: absolute;
+      right: 7rem;
+      top: 6rem;
+      button {
+        font-size: 14px;
+        text-decoration: none;
+        background-color: hsl(185deg 58% 70%);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: hsl(0deg 0% 10%);
+        padding: 0.5rem 1rem;
+        border-radius: 0.2rem;
+
+        transition: all 300ms ease-in;
+        cursor: pointer;
+        &:hover {
+          color: #ffffff;
+          background-color: hsl(0deg 0% 10%);
+          box-shadow: 0 0 1rem hsl(185deg 58% 70%),
+            0 0 0.5rem hsl(185deg 58% 70%), 0 0 0.2rem hsl(185deg 58% 70%);
+        }
+      }
+    }
 
     nav {
       margin-left: auto;
-      margin-right: 3rem;
+      margin-right: 5rem;
     }
     .img-container {
-      width: 3rem;
+      width: 2.75rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      height: 2.75rem;
       cursor: pointer;
       @extend .flex, .align-center, .justify-center;
 
       > img {
         max-width: 2rem;
+        filter: invert(100%);
       }
-
-      background-color: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      height: 3rem;
     }
 
     .search {
@@ -107,7 +154,7 @@ html {
     }
 
     h4 {
-      font-size: 35px;
+      font-size: 25px;
       color: #fff;
       margin: 0 0rem 0 1rem;
     }
@@ -115,7 +162,7 @@ html {
     a {
       color: #fff;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 15px;
       margin: 0 2.75rem;
       position: relative;
 
@@ -173,6 +220,18 @@ html {
 .section {
   min-height: 100vh;
   padding: 10em 5em;
+  &.FAQ {
+    min-height: 0;
+    background-size: cover;
+  }
+  &.application {
+    background-image: url(../img/footer-bg.png);
+    background-color: black;
+    background-size: 100% 66%;
+    background-repeat: no-repeat;
+    padding-bottom: 0%;
+    background-position-y: 130%;
+  }
 }
 
 .subscription {
@@ -202,8 +261,11 @@ html {
     .detail {
       width: 16rem;
       height: 16rem;
+      opacity: 0;
+      transform: translateY(20%);
       background-color: #2e2c2c;
       border-radius: 50%;
+      transition: 1000ms;
       text-align: center;
       filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
       padding: 2rem;
@@ -250,12 +312,18 @@ html {
       width: 25rem;
       height: 18rem;
       background-color: #2e2c2c;
+      transition: 1000ms;
       filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
       padding: 0 2rem;
       text-align: center;
+      opacity: 0;
       justify-content: center;
       gap: 4rem;
-
+      border-radius: 15px;
+      transform: translateX(50%);
+      &:first-of-type {
+        transform: translateX(-50%);
+      }
       .head {
         padding-top: 1.5rem;
         margin-bottom: 1rem;
@@ -309,7 +377,30 @@ html {
       border-radius: 0 0 8px 8px;
       padding-top: 2rem;
       padding-bottom: 2rem;
+      animation: faqContent 250ms;
 
+      @keyframes faqContent {
+        0% {
+          padding-top: 0.25rem;
+          padding-bottom: 0.25rem;
+        }
+        25% {
+          padding-top: 0.75rem;
+          padding-bottom: 0.75rem;
+        }
+        50% {
+          padding-top: 1.25rem;
+          padding-bottom: 1.25rem;
+        }
+        75% {
+          padding-top: 1.75rem;
+          padding-bottom: 1.75rem;
+        }
+        100% {
+          padding-top: 2rem;
+          padding-bottom: 2rem;
+        }
+      }
       p {
         color: #fff;
       }
@@ -324,15 +415,20 @@ html {
 
 // First person
 .firstPerson {
-  display: block;
 }
 
-.secondPerson, .thirdPerson {
-  display: none;
+.secondPerson,
+.thirdPerson {
+  position: absolute;
+  opacity: 0;
 }
 .firstPerson,
 .secondPerson,
 .thirdPerson {
+  &.person {
+    padding-bottom: 0;
+    box-sizing: border-box;
+  }
   h2,
   h3,
   h5,
@@ -352,20 +448,19 @@ html {
   li {
     transform: translateY(9rem);
   }
-  
 }
 .section {
   padding: 160px 80px;
 }
 
 .person-container {
-  min-height: 1500vh;
+  min-height: 1300vh;
   position: relative;
 }
 
 .person {
   * {
-    transition:transform 1000ms, opacity 1000ms;
+    transition: transform 500ms, opacity 500ms;
   }
 
   overflow: hidden;
@@ -379,9 +474,10 @@ html {
     background-image: url(../img/brand_bg.jpg);
     background-size: cover;
     left: 0;
-    top: 10rem;
+    top: 8rem;
+    background-repeat: no-repeat;
     scale: 1.3;
-    transition: 5000ms;
+    transition: 3000ms;
   }
 
   background-repeat: no-repeat;
@@ -440,9 +536,9 @@ html {
         margin-top: 1rem;
         // margin-left: 5rem;
         position: relative;
-      &:first-of-type {
-        margin-top: 2rem;
-      }
+        &:first-of-type {
+          margin-top: 2rem;
+        }
       }
 
       li::before {
