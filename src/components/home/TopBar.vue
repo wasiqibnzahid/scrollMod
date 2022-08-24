@@ -45,7 +45,6 @@
 
 <script>
 export default {
-  props: ["addClass"],
   data() {
     return {
       navLinks: [
@@ -55,8 +54,25 @@ export default {
         { text: "Community", to: "/" },
         { text: "Support", to: "/" },
       ],
+      addClass: false,
     };
   },
+  methods: {
+    setBackground() {
+      if (window.scrollY > 50) {
+        this.addClass = true;
+      } else {
+        this.addClass = false;
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener("scroll", this.setBackground);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.setBackground);
+
+  }
 };
 </script>
 

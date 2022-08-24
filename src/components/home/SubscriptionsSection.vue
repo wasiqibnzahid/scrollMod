@@ -9,20 +9,20 @@
         out to:
       </p>
       <div class="price" ref="priceContainer">
-        <div class="detail">
+        <div class="detail one">
           <div class="price-detail"><span>$</span>5</div>
           <div class="description">
             for each Auto-Tune Unlimited Monthly Subscription Trial
           </div>
         </div>
-        <div class="detail">
+        <div class="detail two">
           <div class="price-detail"><span>$</span>30</div>
           <div class="description">
             for each paid Auto-Tune Unlimited Monthly Subscription sold for
             $24.99
           </div>
         </div>
-        <div class="detail">
+        <div class="detail three">
           <div class="price-detail"><span>$</span>45</div>
           <div class="description">
             for each paid Auto-Tune Unlimited Monthly Subscription sold for
@@ -37,7 +37,7 @@
       </div>
       <h2>Perpetual Plugins</h2>
       <div ref="tierContainer" class="tiers">
-        <div class="tier">
+        <div class="tier one">
           <div class="head">Tier 1</div>
           <p>
             For each sale of any perpetual plug-in license, affiliates are paid
@@ -47,7 +47,7 @@
           </p>
           <p class="tier-note">(Note that it does not include upgrades.)</p>
         </div>
-        <div class="tier">
+        <div class="tier two">
           <div class="head">Tier 2</div>
           <p>
             If an affiliate generates $2,000 or more of sales per month, they
@@ -61,6 +61,11 @@
 </template>
 
 <script>
+// GSAP Animation imports
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 export default {
   data() {
     return {
@@ -69,125 +74,63 @@ export default {
     };
   },
   mounted() {
-    // Price Section Observer
-    const priceObserver = new IntersectionObserver((change) => {
-      if (change[0].isIntersecting) {
-        if (this.itemTop == 0) {
-          this.itemTop = window.scrollY;
-        }
-        window.addEventListener("scroll", this.subscriptionScroll);
-      } else {
-        window.removeEventListener("scroll", this.subscriptionScroll);
-      }
-    });
-    priceObserver.observe(this.$refs.priceContainer);
-
-    const tierObserver = new IntersectionObserver((change) => {
-      if (change[0].isIntersecting) {
-        if (this.tierTop == 0) {
-          this.tierTop = window.scrollY;
-        }
-        window.addEventListener("scroll", this.tierScroll);
-      }
-    });
-    tierObserver.observe(this.$refs.tierContainer);
+    this.subscriptionScroll();
+    this.tierScroll();
   },
   methods: {
     subscriptionScroll() {
-      const scroll = window.scrollY;
-      this.priceItems.forEach((x, i) => {
-        if (scroll > this.itemTop - 50 && scroll < this.itemTop + 150) {
-          x.style.opacity = "0";
-          x.style.transform = "translateY(30%)";
-        } else if (scroll > this.itemTop + 150 && scroll < this.itemTop + 200) {
-          if (i == 0) {
-            x.style.opacity = "0.5";
-            x.style.transform = "translateY(20%)";
-          } else {
-            x.style.opacity = "0";
-            x.style.transform = "translateY(30%)";
-          }
-        } else if (scroll > this.itemTop + 200 && scroll < this.itemTop + 250) {
-          if (i == 0) {
-            x.style.opacity = "1";
-            x.style.transform = "translateY(0)";
-          } else if (i == 1) {
-            x.style.opacity = "0.5";
-            x.style.transform = "translateY(20%)";
-          } else {
-            x.style.opacity = "0";
-            x.style.transform = "30%";
-          }
-        } else if (scroll > this.itemTop + 250 && scroll < this.itemTop + 300) {
-          if (i != 2) {
-            x.style.opacity = "1";
-            x.style.transform = "translateY(0)";
-          } else {
-            x.style.opacity = "0.5";
-            x.style.transform = "translateY(20%)";
-          }
-        } else if (scroll > this.itemTop + 300) {
-          x.style.opacity = "1";
-          x.style.transform = "translateY(0)";
-        }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          start: "top 70%",
+          end: "top 50%",
+          trigger: ".price",
+          scrub: 5,
+        },
       });
+      tl.to(".detail.one", {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+      })
+        .to(
+          ".detail.two",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+          },
+          "<50%"
+        )
+        .to(
+          ".detail.three",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+          },
+          "<50%"
+        );
     },
     tierScroll() {
-      const scroll = window.scrollY;
-      this.tierItems.forEach((x, i) => {
-        if (scroll > this.tierTop && scroll < this.tierTop + 50) {
-          x.style.opacity = "0";
-          if (i == 0) {
-            x.style.transform = "translateX(-50%)";
-          } else {
-            x.style.transform = "translateX(50%)";
-          }
-        } else if (scroll > this.tierTop + 50 && scroll < this.tierTop + 100) {
-          x.style.opacity = "0.2";
-          if (i == 0) {
-            x.style.transform = "translateX(-20%)";
-          } else {
-            x.style.transform = "translateX(20%)";
-          }
-        } else if (scroll > this.tierTop + 150 && scroll < this.tierTop + 200) {
-          x.style.opacity = "0.4";
-          if (i == 0) {
-            x.style.transform = "translateX(-15%)";
-          } else {
-            x.style.transform = "translateX(15%)";
-          }
-        } else if (scroll > this.tierTop + 200 && scroll < this.tierTop + 250) {
-          x.style.opacity = '0.7'
-          if (i == 0) {
-            x.style.transform = "translateX(-10%)";
-          } else {
-            x.style.transform = "translateX(10%)";
-          }
-        }
-        else if (scroll > this.tierTop + 250 && scroll < this.tierTop + 300) {
-x.style.opacity = '0.85'
-if(i == 0) {
-  x.style.transform = 'translateX(-5%)'
-}
-else {
-  x.style.transform = 'translateX(5%)'
-
-}
-
-        }
-        else if (scroll > this.tierTop + 300) {
-          x.style.transform = 'translateX(0)'
-          x.style.opacity = '1'
-        }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".tiers",
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 5,
+        },
       });
-    },
-  },
-  computed: {
-    priceItems() {
-      return this.$refs.priceContainer.querySelectorAll(".detail");
-    },
-    tierItems() {
-      return this.$refs.tierContainer.querySelectorAll(".tier");
+      tl.from(".tier.one", {
+        opacity: 0,
+        x: -100,
+      }).from(
+        ".tier.two",
+        {
+          opacity: 0,
+          x: 100,
+        },
+        "<"
+      );
     },
   },
 };

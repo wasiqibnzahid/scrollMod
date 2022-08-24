@@ -59,7 +59,15 @@ html {
 
 // Home page top section styles
 .user-img-container {
-  background-image: url(../img/header-img.png), url(../img/homeMic.png);
+  &.one {
+
+    background-image: url(../img/header-img.png);
+    background-position-x: 90%
+  }
+  &.two {
+    background-image: url(../img/homeMic.png);
+    background-position-x: 0;
+  }
   z-index: -1;
   background-repeat: no-repeat;
   background-size: auto 100%;
@@ -68,9 +76,6 @@ html {
   top: 0;
   right: 0;
   bottom: 0;
-  background-position-x: 90%, 0;
-  transition: 2000ms ease;
-}
 
 .bg-container-home {
   position: absolute;
@@ -265,7 +270,6 @@ html {
       transform: translateY(20%);
       background-color: #2e2c2c;
       border-radius: 50%;
-      transition: 1000ms;
       text-align: center;
       filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
       padding: 2rem;
@@ -312,18 +316,15 @@ html {
       width: 25rem;
       height: 18rem;
       background-color: #2e2c2c;
-      transition: 1000ms;
       filter: drop-shadow(0px 0 1rem hsla(185deg, 58%, 70%, 0.6));
       padding: 0 2rem;
       text-align: center;
-      opacity: 0;
+      opacity: 1;
       justify-content: center;
       gap: 4rem;
       border-radius: 15px;
-      transform: translateX(50%);
-      &:first-of-type {
-        transform: translateX(-50%);
-      }
+      
+      
       .head {
         padding-top: 1.5rem;
         margin-bottom: 1rem;
@@ -414,14 +415,12 @@ html {
 }
 
 // First person
-.firstPerson {
+
+#personContainer2,
+#personContainer3 {
+  display: none;
 }
 
-.secondPerson,
-.thirdPerson {
-  position: absolute;
-  opacity: 0;
-}
 .firstPerson,
 .secondPerson,
 .thirdPerson {
@@ -429,58 +428,40 @@ html {
     padding-bottom: 0;
     box-sizing: border-box;
   }
-  h2,
-  h3,
-  h5,
-  li {
-    opacity: 0;
-  }
-  h2 {
-    transform: translateY(30rem);
-  }
-  h3 {
-    transform: translateY(30rem);
-  }
-  h5 {
-    transform: translateY(9rem);
-  }
-
-  li {
-    transform: translateY(9rem);
-  }
 }
 .section {
   padding: 160px 80px;
 }
 
 .person-container {
-  min-height: 1300vh;
   position: relative;
+
+  .bg-img {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(../img/brand_bg.jpg);
+    background-size: 125% 120%;
+    background-position-y: 0;
+    background-position-x: 50%;
+    overflow: hidden;
+    left: 0;
+    top: 7rem;
+    background-repeat: no-repeat;
+    scale: 1.3;
+  }
 }
 
 .person {
   * {
-    transition: transform 500ms, opacity 500ms;
+    // transition: transform 500ms, opacity 500ms;
   }
-
+  position: relative;
   overflow: hidden;
-  position: sticky;
   top: 0;
-
-  .bg-img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-image: url(../img/brand_bg.jpg);
-    background-size: cover;
-    left: 0;
-    top: 8rem;
-    background-repeat: no-repeat;
-    scale: 1.3;
-    transition: 3000ms;
-  }
-
+  padding-bottom: 0;
   background-repeat: no-repeat;
+  box-sizing: border-box;
 
   .first-part {
     color: #fff;
@@ -492,7 +473,28 @@ html {
         min-height: 110vh;
         margin-top: -12rem;
         opacity: 0;
-        transform: translateX(-12rem);
+        &:not(.img-right) {
+          transform: translateX(-100px);
+        }
+        &.img-right {
+          transform: translateX(100px);
+        }
+      }
+    }
+    h2,
+    h3 {
+      opacity: 0;
+      transform: translateY(20rem);
+    }
+    .info {
+      transform: translateY(50%);
+
+      h5 {
+        opacity: 0;
+      }
+      li {
+        transform: translateX(2rem);
+        opacity: 0;
       }
     }
     .column {
