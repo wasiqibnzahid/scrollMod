@@ -47,7 +47,7 @@ export default {
           trigger: ".home-container",
           start: "top top",
           end: "bottom top",
-          scrub: 8,
+          scrub: 4,
         },
       });
       tl.to(".user-img-container.one", {

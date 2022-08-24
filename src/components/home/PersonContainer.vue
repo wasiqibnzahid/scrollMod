@@ -5,9 +5,9 @@
         <div class="bg-img"></div>
         <div class="first-part">
           <div class="pics column">
-            <img src="../../assets/img/brand_pic1.png" alt="" />
+            <img style="max-width: 80%" src="../../assets/img/brand_pic1.png" alt="" />
           </div>
-          <div class="column right">
+          <div class="column right text">
             <h2 class="title">Join the B(r)and!</h2>
             <h3 class="subtitle">Partner With Auto-Tune</h3>
 
@@ -35,7 +35,7 @@
       <div id="personContainer2" class="section person">
         <div class="bg-img"></div>
         <div class="first-part">
-          <div class="column">
+          <div class="column text">
             <h2 class="title">Opportunities</h2>
             <h3 class="subtitle">Let's make lots of money</h3>
 
@@ -67,7 +67,7 @@
           <div class="pics column">
             <img src="../../assets/img/brand_pic3.png" alt="" />
           </div>
-          <div class="column right">
+          <div class="column right text">
             <h2 class="title">Backstage Pass</h2>
             <h3 class="subtitle">In Da Club</h3>
 
@@ -109,10 +109,10 @@ export default {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#personContainer1",
-          scrub: 6,
+          scrub: 4,
           pin: "#personContent",
           start: "top top",
-          end: "+=5000",
+          end: "+=7000",
         },
       });
       tl.to(".bg-img", {
