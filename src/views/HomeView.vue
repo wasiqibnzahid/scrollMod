@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="home-container">
-      <div class="user-img-container"></div>
+      <div class="user-img-container one"></div>
+      <div class="user-img-container two"></div>
       <div class="bg-container-home"></div>
+      <TopBar />
       <div class="home-content-box flex flex-column">
-        <TopBar />
         <div class="home-content container">
           <h2>Why partner with Auto-Tune?</h2>
           <div class="flex align-center">
@@ -14,11 +15,7 @@
         </div>
       </div>
     </div>
-    <div ref="person-container" class="person-container">
-      <firstPerson class="firstPerson" ref="personOne" />
-      <secondPerson class="secondPerson" ref="personTwo" />
-      <thirdPerson class="thirdPerson" ref="personThree" />
-    </div>
+    <PersonContainer />
     <SubscriptionsSection />
     <PluginsSection />
     <FAQSection />
@@ -28,71 +25,52 @@
 
 <script>
 import TopBar from "../components/home/TopBar.vue";
-import firstPerson from "../components/home/firstPerson.vue";
-import secondPerson from "../components/home/secondPerson.vue";
-import thirdPerson from "../components/home/thirdPerson.vue";
+import PersonContainer from "../components/home/PersonContainer.vue";
 import PluginsSection from "../components/home/PluginsSection.vue";
 import SubscriptionsSection from "../components/home/SubscriptionsSection.vue";
 import AffiliateSection from "../components/home/AffiliateSection.vue";
 import FAQSection from "../components/home/FAQSection.vue";
+
+// GSAP Imports
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
 export default {
-  // mounted() {
-  //   window.addEventListener("scroll", this.scrollFunction);
-  // },
+  mounted() {
+    this.topBarAnimation();
+  },
+  methods: {
+    topBarAnimation() {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".home-container",
+          start: "top top",
+          end: "bottom top",
+          scrub: 8,
+        },
+      });
+      tl.to(".user-img-container.one", {
+        x: 600,
+      }).to(
+        ".user-img-container.two",
+        {
+          x: -600,
+        },
+        "<"
+      );
+    },
+  },
   components: {
     TopBar,
-    firstPerson,
-    secondPerson,
-    thirdPerson,
+    PersonContainer,
     SubscriptionsSection,
     PluginsSection,
     FAQSection,
     AffiliateSection,
   },
   data() {
-    return {
-      lastPosition: 0,
-      showMyItem: true,
-    };
-  },
-  methods: {
-    // scrollFunction() {
-    //   var innerInfo = this.$refs.personOne.$el.querySelectorAll("h2, h3");
-    //   if (window.scrollY >= 1007) {
-    //     if (this.lastPosition < 1007) {
-    //       this.lastPosition = window.scrollY;
-    //     } else if (this.lastPosition + 15 <= window.scrollY) {
-    //       this.lastPosition = window.scrollY;
-    //       innerInfo.forEach((x) => {
-    //         if (x.style.opacity != "" && parseInt(x.style.opacity) < 1) {
-    //           var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, "").replace("%)", ""))
-    //           x.style.opacity = `${parseFloat(x.style.opacity) + 0.1}`;
-    //           if(translate > 0) {
-    //             x.style.transform = `translateX(${translate - 4}%)`
-    //             console.log(x.style.transform)
-    //           }
-              
-    //         } else if (x.style.opacity == "") {
-    //           x.style.opacity = "0";
-    //           x.style.transform = "translateX(20%)";
-    //         }
-    //       });
-    //     } else if (this.lastPosition - 15 >= window.scrollY) {
-    //       this.lastPosition = window.scrollY;
-    //       innerInfo.forEach((x) => {
-    //         if (x.style.opacity != "" && parseFloat(x.style.opacity) > 0) {
-    //           x.style.opacity = `${parseFloat(x.style.opacity) - 0.1}`;
-    //            var translate = parseInt(x.style.transform.replaceAll(/^\D+/g, "").replace("%)", ""))
-    //            if(translate < 20) {
-    //             x.style.transform = `translateX(${translate + 4}%)`
-
-    //            }
-    //         }
-    //       });
-    //     }
-    //     // console.log(window.scrollY, 1120, 1320)
-    //   }
-    // },
+    return {};
   },
 };
 </script>

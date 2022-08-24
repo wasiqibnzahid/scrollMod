@@ -1,5 +1,8 @@
 <template>
-  <div class="container topbar flex align-center">
+  <div
+    class="container topbar flex align-center"
+    :class="addClass ? 'scrolled' : ''"
+  >
     <div class="flex align-center">
       <div class="img-container">
         <img src="../../assets/img/threedots.png" alt="" />
@@ -13,14 +16,29 @@
     </nav>
     <div class="search flex align-center justify-center">
       <div class="img-container">
-        <img src="../../assets/img/threedots.png" alt="" />
+        <img
+          style="width: 1.25rem"
+          src="../../assets/img/search-icon.png"
+          alt=""
+        />
       </div>
       <div class="img-container">
-        <img src="../../assets/img/threedots.png" alt="" />
+        <img
+          style="width: 1.75rem; margin-top: -5px; margin-left: -2px"
+          src="../../assets/img/user-icon.png"
+          alt=""
+        />
       </div>
       <div class="img-container">
-        <img src="../../assets/img/threedots.png" alt="" />
+        <img
+          style="width: 1.75rem; margin-left: -2px"
+          src="../../assets/img/cart-icon.png"
+          alt=""
+        />
       </div>
+    </div>
+    <div class="button-container">
+      <button>Apply Now</button>
     </div>
   </div>
 </template>
@@ -36,8 +54,25 @@ export default {
         { text: "Community", to: "/" },
         { text: "Support", to: "/" },
       ],
+      addClass: false,
     };
   },
+  methods: {
+    setBackground() {
+      if (window.scrollY > 50) {
+        this.addClass = true;
+      } else {
+        this.addClass = false;
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener("scroll", this.setBackground);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.setBackground);
+
+  }
 };
 </script>
 
