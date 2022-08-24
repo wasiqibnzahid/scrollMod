@@ -56,27 +56,30 @@ html {
 .justify-space-evenly {
   justify-content: space-evenly;
 }
+.justify-end {
+  justify-content: flex-end;
+}
 
 // Home page top section styles
 .user-img-container {
   &.one {
-
     background-image: url(../img/header-img.png);
-    background-position-x: 90%
+    background-position-x: 90%;
+    background-size: auto 100%;
   }
   &.two {
     background-image: url(../img/homeMic.png);
     background-position-x: 0;
+    background-size: auto 107.5%;
   }
   z-index: -1;
   background-repeat: no-repeat;
-  background-size: auto 100%;
   position: absolute;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-
+}
 .bg-container-home {
   position: absolute;
   top: 0;
@@ -94,17 +97,16 @@ html {
   min-height: 100vh;
   min-width: 100%;
   background-size: cover;
-  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%);
 
   .topbar {
-    padding-right: 7rem;
+    padding-right: 8rem;
     white-space: nowrap;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
-    height: 40px;
+    z-index: 999999;
+    height: 50px;
     transition: 500ms;
     background: transparent;
     &.scrolled {
@@ -113,16 +115,16 @@ html {
     }
     .button-container {
       position: absolute;
-      right: 7rem;
-      top: 6rem;
+      right: 7%;
+      bottom: -75%;
       button {
-        font-size: 14px;
+        font-size: 0.8rem;
         text-decoration: none;
         background-color: hsl(185deg 58% 70%);
         font-weight: bold;
         text-transform: uppercase;
         color: hsl(0deg 0% 10%);
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1.75rem;
         border-radius: 0.2rem;
 
         transition: all 300ms ease-in;
@@ -137,14 +139,17 @@ html {
     }
 
     nav {
+      width: 60%;
+      gap: 8%;
       margin-left: auto;
-      margin-right: 5rem;
+      justify-content: flex-end;
+      padding-right: 2%;
     }
     .img-container {
-      width: 2.75rem;
+      width: 3rem;
       background-color: rgba(255, 255, 255, 0.5);
       border-radius: 50%;
-      height: 2.75rem;
+      height: 3rem;
       cursor: pointer;
       @extend .flex, .align-center, .justify-center;
 
@@ -156,10 +161,12 @@ html {
 
     .search {
       gap: 1rem;
+      width: 17%;
+      // margin-left: auto;
     }
 
     h4 {
-      font-size: 25px;
+      font-size: 1.7rem;
       color: #fff;
       margin: 0 0rem 0 1rem;
     }
@@ -167,8 +174,7 @@ html {
     a {
       color: #fff;
       font-weight: bold;
-      font-size: 15px;
-      margin: 0 2.75rem;
+      font-size: 1.2rem;
       position: relative;
 
       &:hover::before {
@@ -192,11 +198,12 @@ html {
 
   .home-content {
     position: absolute;
-    top: 75%;
+    top: 50%;
     bottom: 0;
     left: 0;
     right: 0;
-
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 90%);
+    padding-top: 16.5rem;
     h2 {
       color: #fff;
       font-size: 3.75rem;
@@ -232,10 +239,11 @@ html {
   &.application {
     background-image: url(../img/footer-bg.png);
     background-color: black;
-    background-size: 100% 66%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     padding-bottom: 0%;
-    background-position-y: 130%;
+    background-position-y: 30rem;
+    box-sizing: border-box;
   }
 }
 
@@ -323,8 +331,7 @@ html {
       justify-content: center;
       gap: 4rem;
       border-radius: 15px;
-      
-      
+
       .head {
         padding-top: 1.5rem;
         margin-bottom: 1rem;
@@ -425,6 +432,7 @@ html {
 .secondPerson,
 .thirdPerson {
   &.person {
+    position: relative;
     padding-bottom: 0;
     box-sizing: border-box;
   }
@@ -441,7 +449,7 @@ html {
     height: 100vh;
     width: 100vw;
     background-image: url(../img/brand_bg.jpg);
-    background-size: 125% 120%;
+    background-size: 100% 120%;
     background-position-y: 0;
     background-position-x: 50%;
     overflow: hidden;
@@ -462,7 +470,29 @@ html {
   padding-bottom: 0;
   background-repeat: no-repeat;
   box-sizing: border-box;
-
+  &::before {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(
+      180deg,
+      rgb(0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 90%
+    );
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50%;
+    z-index: 1;
+  }
+  &::after {
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+    position: absolute;
+    content: "";
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
   .first-part {
     color: #fff;
     position: relative;
@@ -473,6 +503,8 @@ html {
         min-height: 110vh;
         margin-top: -12rem;
         opacity: 0;
+        z-index: 0;
+        position: relative;
         &:not(.img-right) {
           transform: translateX(-100px);
         }
@@ -501,6 +533,9 @@ html {
       width: 50%;
       display: flex;
       flex-direction: column;
+      &.text {
+        z-index: 2;
+      }
 
       .title {
         // margin-top: 10rem;
@@ -591,16 +626,31 @@ html {
     color: #fff;
 
     .form {
-      input {
-        padding: 10px;
+      align-items: center;
+      padding: 0 3rem;
+      input,
+      select {
+        padding: 0.75rem;
         margin-top: 1rem;
         margin-bottom: 1rem;
         width: 100%;
         font-size: 1rem;
-        background-color: #2e2c2c;
+        background-color: hsl(0, 0%, 53%);
         border: 1px solid black;
+        color: #000;
+      }
+      ::placeholder {
+        color: #ccc;
+        opacity: 1;
       }
 
+      :-ms-input-placeholder {
+        color: #ccc;
+      }
+
+      ::-ms-input-placeholder {
+        color: #ccc;
+      }
       .button {
         text-align: center;
         margin-top: 1rem;
@@ -609,8 +659,30 @@ html {
       button {
         background-color: hsl(185deg 58% 70%);
         border: #fff;
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0 3px;
         cursor: pointer;
+      }
+      .activeButtons {
+        display: flex;
+        gap: 10px;
+        margin-top: 5rem;
+        justify-content: center;
+        .circle {
+          height: 1rem;
+          width: 1rem;
+          border-radius: 50%;
+          background-color: #bbb;
+          opacity: 0.5;
+          &.active {
+            opacity: 1;
+          }
+          &.completed {
+            background: hsl(185, 58%, 70%);
+          }
+        }
       }
     }
   }

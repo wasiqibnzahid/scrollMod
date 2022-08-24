@@ -14,7 +14,7 @@
         {{ item.text }}
       </router-link>
     </nav>
-    <div class="search flex align-center justify-center">
+    <div class="search flex align-center justify-end">
       <div class="img-container">
         <img
           style="width: 1.25rem"
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="button-container">
-      <button>Apply Now</button>
+      <button>Apply Now!</button>
     </div>
   </div>
 </template>
